@@ -1,6 +1,7 @@
 package africa.semicolon.phoneBookTech.data.repositories;
 
 import africa.semicolon.phoneBookTech.data.models.Contact;
+import africa.semicolon.phoneBookTech.exception.ContactExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +14,21 @@ class ContactRepositoryImplTest {
         contactRepository = new ContactRepositoryImpl();
     }
     @Test
-    void tetsThatContactCanBeAddedToRepository() {
+    void testThatContactCanBeAddedToRepository() {
         //given
         Contact contact = new Contact("Dee", "Deji", "07031054664");
         contactRepository.addContact(contact);
         assertEquals(1, contactRepository.count());
+    }
+
+    @Test
+    void testThatAddingDuplicateContact_ThrowsException() {
+        //given
+        Contact contact = new Contact("Dee", "Deji", "07031054664");
+        contactRepository.addContact(contact);
+        Contact contact2 = new Contact("Dee", "Deji", "07031054664");
+
+        assertThrows(ContactExistsException.class, ()-> contactRepository.addContact(contact));
     }
 
     @Test

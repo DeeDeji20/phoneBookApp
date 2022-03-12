@@ -1,6 +1,7 @@
 package africa.semicolon.phoneBookTech.data.repositories;
 
 import africa.semicolon.phoneBookTech.data.models.Contact;
+import africa.semicolon.phoneBookTech.exception.ContactExistsException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,16 @@ public class ContactRepositoryImpl implements ContactRepository {
 
     @Override
     public Contact addContact(Contact contact) {
+        validateContact(contact);
         dataBase.add(contact);
         count++;
         return contact;
+    }
+
+    private void validateContact(Contact contact) {
+        for (Contact contactInPhoneBook : dataBase) {
+            if (contactInPhoneBook.equals(contact)) throw new ContactExistsException("Contact exists");
+        }
     }
 
     @Override

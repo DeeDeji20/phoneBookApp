@@ -3,6 +3,7 @@ package africa.semicolon.phoneBookTech.services;
 import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
 import africa.semicolon.phoneBookTech.dtos.request.DeleteContactRequest;
 import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
+import africa.semicolon.phoneBookTech.exception.ContactExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

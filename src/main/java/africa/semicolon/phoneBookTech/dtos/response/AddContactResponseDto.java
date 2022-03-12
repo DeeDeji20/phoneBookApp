@@ -6,4 +6,5 @@ import lombok.Data;
 public class AddContactResponseDto {
     private String fullName;
     private String mobile;
+    private String status;
 }

@@ -16,12 +16,12 @@ public class ContactServiceImpl implements ContactService {
         Contact contactToBeAdded = new Contact(request.getFirstName(),
                                     request.getLastName(),
                                     request.getMobile());
-
         db.addContact(contactToBeAdded);
 
         AddContactResponseDto response = new AddContactResponseDto();
         response.setFullName(contactToBeAdded.getFirstName() + " " +  contactToBeAdded.getLastName());
         response.setMobile(contactToBeAdded.getMobile());
+        response.setStatus("Contact saved");
         return response;
     }
 
