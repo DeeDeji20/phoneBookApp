@@ -1,18 +1,19 @@
 package africa.semicolon.phoneBookTech.services;
 
 import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
+import africa.semicolon.phoneBookTech.dtos.request.DeleteContactRequest;
 import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddContactServiceImplTest {
+class ContactServiceImplTest {
 
-    AddContactService contactService;
+    ContactService contactService;
     @BeforeEach
     void setUp(){
-        contactService = new AddContactServiceImpl();
+        contactService = new ContactServiceImpl();
     }
     @Test
     void testThatAContactCanBeAddedToRepository(){
@@ -37,11 +38,32 @@ class AddContactServiceImplTest {
 //        when
        AddContactResponseDto response = contactService.save(contactToBeAdded);
         assertEquals(1, contactService.getDataBase().count());
-        System.out.println(response.getFirstName());
         assertNotNull(response);
-       assertEquals("Deji", response.getFirstName());
-       assertEquals("Dee", response.getLastName());
+       assertEquals("Deji Dee", response.getFullName());
        assertEquals("070", response.getMobile());
 
+    }
+
+    @Test
+    void testThatAcontactCanBeDeletedFromRepository(){
+        //        given
+        AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
+        contactToBeAdded.setFirstName("Deji");
+        contactToBeAdded.setLastName("Dee");
+        contactToBeAdded.setMobile("070");
+        AddContactResponseDto response1 = contactService.save(contactToBeAdded);
+        //        given
+        AddContactRequestDto contactToBeAdded2 = new AddContactRequestDto();
+        contactToBeAdded2.setFirstName("Lota");
+        contactToBeAdded2.setLastName("Onwuka");
+        contactToBeAdded2.setMobile("07054");
+
+        AddContactResponseDto response2 = contactService.save(contactToBeAdded2);
+
+
+        DeleteContactRequest deleteRequest = new DeleteContactRequest();
+        deleteRequest.setFirstName("Lota");
+        deleteRequest.setMobile("07054");
+        contactService.delete(deleteRequest);
     }
 }
