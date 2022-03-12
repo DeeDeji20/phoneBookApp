@@ -60,7 +60,6 @@ class ContactServiceImplTest {
 
         AddContactResponseDto response2 = contactService.save(contactToBeAdded2);
 
-
         DeleteContactRequest deleteRequest = new DeleteContactRequest();
         deleteRequest.setFirstName("Lota");
         deleteRequest.setMobile("07054");
