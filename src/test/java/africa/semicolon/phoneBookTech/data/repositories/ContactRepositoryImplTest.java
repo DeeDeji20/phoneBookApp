@@ -28,7 +28,18 @@ class ContactRepositoryImplTest {
         contactRepository.addContact(contact);
         Contact contact2 = new Contact("Dee", "Deji", "07031054664");
 
-        assertThrows(ContactExistsException.class, ()-> contactRepository.addContact(contact));
+        assertThrows(ContactExistsException.class, ()-> contactRepository.addContact(contact2));
+    }
+
+    @Test
+    void testThatAddingDuplicateNumber_ThrowsException() {
+        //given
+        Contact contact = new Contact("Dee", "Deji", "07031054664");
+        contactRepository.addContact(contact);
+        Contact contact2 = new Contact("Dee", "Deo", "07031054664");
+
+        assertThrows(ContactExistsException.class, ()-> contactRepository.addContact(contact2));
+
     }
 
     @Test
@@ -57,8 +68,6 @@ class ContactRepositoryImplTest {
         Contact foundContact = contactRepository.findBy("Dee");
         //assert
         assertEquals(contact1,foundContact);
-
-
     }
 
 

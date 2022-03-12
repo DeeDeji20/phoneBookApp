@@ -20,7 +20,9 @@ public class ContactRepositoryImpl implements ContactRepository {
 
     private void validateContact(Contact contact) {
         for (Contact contactInPhoneBook : dataBase) {
-            if (contactInPhoneBook.equals(contact)) throw new ContactExistsException("Contact exists");
+            if (contactInPhoneBook.equals(contact)||
+                contactInPhoneBook.getMobile().equalsIgnoreCase(contact.getMobile())
+            ) throw new ContactExistsException("Contact exists");
         }
     }
 
