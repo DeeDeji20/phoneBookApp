@@ -1,13 +1,13 @@
 package africa.semicolon.phoneBookTech.data.repositories;
 
-import africa.semicolon.phoneBookTech.data.models.Contacts;
+import africa.semicolon.phoneBookTech.data.models.Contact;
 
 public interface ContactRepository {
-    Contacts addContact(Contacts contact);
+    Contact addContact(Contact contact);
     int count();
 
-    void removeContact(Contacts contact);
+    void removeContact(Contact contact);
 
-    Contacts findBy(String name);
+    Contact findBy(String name);
 
 }

@@ -7,7 +7,7 @@ import lombok.*;
 //@AllArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
-public class Contacts {
+public class Contact {
     @NonNull  @Getter @Setter
     private String firstName;
     @NonNull @Getter @Setter
@@ -17,4 +17,8 @@ public class Contacts {
     private String mobile;
     private String office;
 
+    public Contact(String firstName, String mobile) {
+        this.firstName = firstName;
+        this.mobile = mobile;
+    }
 }

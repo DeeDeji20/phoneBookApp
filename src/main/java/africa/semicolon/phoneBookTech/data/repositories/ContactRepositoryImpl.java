@@ -1,16 +1,16 @@
 package africa.semicolon.phoneBookTech.data.repositories;
 
-import africa.semicolon.phoneBookTech.data.models.Contacts;
+import africa.semicolon.phoneBookTech.data.models.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactRepositoryImpl implements ContactRepository {
-    private List<Contacts> dataBase = new ArrayList<>();
+    private List<Contact> dataBase = new ArrayList<>();
     private int count;
 
     @Override
-    public Contacts addContact(Contacts contact) {
+    public Contact addContact(Contact contact) {
         dataBase.add(contact);
         count++;
         return contact;
@@ -22,15 +22,15 @@ public class ContactRepositoryImpl implements ContactRepository {
     }
 
     @Override
-    public void removeContact(Contacts contact) {
-        Contacts foundContact = findBy(contact.getFirstName());
+    public void removeContact(Contact contact) {
+        Contact foundContact = findBy(contact.getFirstName());
         dataBase.remove(foundContact);
         count--;
     }
 
     @Override
-    public Contacts findBy(String name) {
-        for (Contacts contact : dataBase) {
+    public Contact findBy(String name) {
+        for (Contact contact : dataBase) {
             if (contact.getFirstName().equalsIgnoreCase(name)) {
                 return contact;
             }

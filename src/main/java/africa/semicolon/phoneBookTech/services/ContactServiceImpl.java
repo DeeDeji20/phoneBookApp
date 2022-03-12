@@ -1,6 +1,6 @@
 package africa.semicolon.phoneBookTech.services;
 
-import africa.semicolon.phoneBookTech.data.models.Contacts;
+import africa.semicolon.phoneBookTech.data.models.Contact;
 import africa.semicolon.phoneBookTech.data.repositories.ContactRepository;
 import africa.semicolon.phoneBookTech.data.repositories.ContactRepositoryImpl;
 import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
@@ -11,8 +11,8 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository db = new ContactRepositoryImpl();
     @Override
     public AddContactResponseDto save(AddContactRequestDto request) {
-        System.out.println(request.getFirstName());
-        Contacts contactToBeAdded = new Contacts(request.getFirstName(),
+        
+        Contact contactToBeAdded = new Contact(request.getFirstName(),
                                     request.getLastName(),
                                     request.getMobile());
 
@@ -31,6 +31,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void delete(DeleteContactRequest deleteRequest) {
-
+        Contact contactToBeDeleted = new Contact(deleteRequest.getFirstName(), deleteRequest.getMobile());
+        db.removeContact(contactToBeDeleted);
     }
 }

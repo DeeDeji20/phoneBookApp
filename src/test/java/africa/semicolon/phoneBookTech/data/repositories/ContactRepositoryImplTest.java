@@ -1,6 +1,6 @@
 package africa.semicolon.phoneBookTech.data.repositories;
 
-import africa.semicolon.phoneBookTech.data.models.Contacts;
+import africa.semicolon.phoneBookTech.data.models.Contact;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ class ContactRepositoryImplTest {
     @Test
     void tetsThatContactCanBeAddedToRepository() {
         //given
-        Contacts contact = new Contacts("Dee", "Deji", "07031054664");
+        Contact contact = new Contact("Dee", "Deji", "07031054664");
         contactRepository.addContact(contact);
         assertEquals(1, contactRepository.count());
     }
@@ -23,11 +23,11 @@ class ContactRepositoryImplTest {
     @Test
     void testThatContactCanBeDeleted(){
         //given
-        Contacts contact1 = new Contacts("Dee", "Deji", "07031054664");
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
         //when
         contactRepository.addContact(contact1);
         //given
-        Contacts contact2 = new Contacts("lota", "onwuka", "09023452145");
+        Contact contact2 = new Contact("lota", "onwuka", "09023452145");
         //when
         contactRepository.addContact(contact2);
         //assert
@@ -39,11 +39,11 @@ class ContactRepositoryImplTest {
     @Test
     void testThatWeCanFindContactByFirstName(){
         //given
-        Contacts contact1 = new Contacts("Dee", "Deji", "07031054664");
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
         //when
         contactRepository.addContact(contact1);
 
-        Contacts foundContact = contactRepository.findBy("Dee");
+        Contact foundContact = contactRepository.findBy("Dee");
         //assert
         assertEquals(contact1,foundContact);
 

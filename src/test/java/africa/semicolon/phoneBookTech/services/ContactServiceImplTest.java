@@ -65,5 +65,6 @@ class ContactServiceImplTest {
         deleteRequest.setFirstName("Lota");
         deleteRequest.setMobile("07054");
         contactService.delete(deleteRequest);
+        assertEquals(1, contactService.getDataBase().count());
     }
 }
