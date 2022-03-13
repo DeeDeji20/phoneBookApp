@@ -16,6 +16,7 @@ class ContactServiceImplTest {
     void setUp(){
         contactService = new ContactServiceImpl();
     }
+
     @Test
     void testThatAContactCanBeAddedToRepository(){
 //        given

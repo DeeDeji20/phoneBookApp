@@ -2,8 +2,12 @@ package africa.semicolon.phoneBookTech.data.repositories;
 
 import africa.semicolon.phoneBookTech.data.models.Contact;
 import africa.semicolon.phoneBookTech.exception.ContactExistsException;
+import africa.semicolon.phoneBookTech.exception.ContactNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,17 +63,70 @@ class ContactRepositoryImplTest {
     }
 
     @Test
-    void testThatWeCanFindContactByFirstName(){
+    void testThatWeCanFindContactsByFirstName(){
+        //given
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
+        Contact contact2 = new Contact("Dee", "fum", "07031096634");
+        //when
+        contactRepository.addContact(contact1);
+        contactRepository.addContact(contact2);
+        List<Contact> foundContacts = contactRepository.findBy("Dee");
+        //assert
+        assertEquals(2,foundContacts.size());
+    }
+
+    @Test
+    void testThatWeCanFindOneContactByFirstName(){
+        //given
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
+        Contact contact2 = new Contact("Deji", "fum", "07031096634");
+        //when
+        contactRepository.addContact(contact1);
+        contactRepository.addContact(contact2);
+        List<Contact> foundContacts = contactRepository.findBy("Dee");
+        //assert
+        assertEquals(1,foundContacts.size());
+    }
+
+    @Test
+    void testThatIfTwoContacts_WithSameNameExist_WeCanFindContactsByFirstName(){
+
+    }
+
+    @Test
+    void testThatWeCanFindContactByMobile(){
         //given
         Contact contact1 = new Contact("Dee", "Deji", "07031054664");
         //when
         contactRepository.addContact(contact1);
 
-        Contact foundContact = contactRepository.findBy("Dee");
-        //assert
+        Contact foundContact = contactRepository.findContactBy("07031054664");
         assertEquals(contact1,foundContact);
     }
 
+    @Test
+    void testThatIfContactAlreadyExists_ThrowsException(){
+        //given
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
+        //when
+        contactRepository.addContact(contact1);
+
+        assertThrows(ContactNotFoundException.class, ()-> contactRepository.findBy("Lota"));
+    }
+
+    @Test
+    void testThatAllContactsCanBeGotten() {
+        //given
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
+        Contact contact2 = new Contact("Dee", "fum", "07031096634");
+        //when
+        contactRepository.addContact(contact1);
+        contactRepository.addContact(contact2);
+//
+        List<Contact> all = contactRepository.findAll();
+        assertEquals(2, all.size());
+
+    }
 
 
 }
