@@ -160,29 +160,32 @@ class ContactServiceImplTest {
     }
 
 
-//    @Test
-//    void testThatContactCanBeUpdated() {
-//        //        given
-//        AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
-//        contactToBeAdded.setFirstName("Deji");
-//        contactToBeAdded.setLastName("Dee");
-//        contactToBeAdded.setMobile("070");
-//        contactService.save(contactToBeAdded);
-//        //        given
-//        AddContactRequestDto contactToBeAdded2 = new AddContactRequestDto();
-//        contactToBeAdded2.setFirstName("Lota");
-//        contactToBeAdded2.setLastName("Onwuka");
-//        contactToBeAdded2.setMobile("07054");
-//
-//        contactService.save(contactToBeAdded2);
-//
-//        UpdateContactRequest request = new UpdateContactRequest();
-//        request.setFirstName("Deola");
-//        request.setLastName("Oladeji");
-//        request.setMobile("0904");
-//        contactService.editContact(request, contactToBeAdded);
-//
+    @Test
+    void testThatContactCanBeUpdated() {
+        //        given
+        AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
+        contactToBeAdded.setFirstName("Deji");
+        contactToBeAdded.setLastName("Dee");
+        contactToBeAdded.setMobile("070");
+        contactService.save(contactToBeAdded);
+        //        given
+        AddContactRequestDto contactToBeAdded2 = new AddContactRequestDto();
+        contactToBeAdded2.setFirstName("Lota");
+        contactToBeAdded2.setLastName("Onwuka");
+        contactToBeAdded2.setMobile("07054");
+
+        contactService.save(contactToBeAdded2);
+
+        UpdateContactRequest request = new UpdateContactRequest();
+        request.setFirstName("Deola");
+        request.setLastName("Oladeji");
+        request.setMobile("0904");
+
+        contactService.editContact(request, "070");
+
+        assertEquals("Deola", contactToBeAdded.getFirstName());
+        assertEquals("0904", contactToBeAdded.getMobile());
 //        UpdateContactResponse response = new UpdateContactResponse();
 //        assertEquals("Contact updated", response.getMessage());
-//    }
+    }
 }

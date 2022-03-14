@@ -21,8 +21,11 @@ public class ContactRepositoryImpl implements ContactRepository {
     private void validateContact(Contact contact) {
         for (Contact contactInPhoneBook : dataBase) {
             if (contactInPhoneBook.equals(contact)||
-                contactInPhoneBook.getMobile().equalsIgnoreCase(contact.getMobile())
-            ) updateContact(contact);
+                contactInPhoneBook.getMobile()
+                .equalsIgnoreCase(contact.getMobile())){
+                updateContact(contact);
+                break;
+            }
         }
     }
 

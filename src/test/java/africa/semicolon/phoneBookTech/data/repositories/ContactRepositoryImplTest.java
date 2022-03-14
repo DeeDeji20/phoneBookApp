@@ -159,7 +159,7 @@ class ContactRepositoryImplTest {
 //        contactRepository.addContact(contact1);
 //        contactRepository.addContact(contact2);
 //
-//        contact1.setFirstName("Sophie");
+//        contactRepository.updateContact(contact1);
 ////        Contact[] found = Arrays.stream(new Contact[]{"Sophie", ""}).toArray()
 //        assertEquals(contact1, contactRepository.findBy("Sophie"));
 //    }

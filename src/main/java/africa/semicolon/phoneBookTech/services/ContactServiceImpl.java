@@ -68,16 +68,19 @@ public class ContactServiceImpl implements ContactService {
        List<Contact> contacts= db.findBy(mobile);
        if(contacts.isEmpty()) throw new ContactNotFoundException("Contact not found");
        else {
+           System.out.println(contacts.get(0));
            if (request.getFirstName() != null) contacts.get(0).setFirstName(request.getFirstName());
            if (request.getLastName() != null) contacts.get(0).setLastName(request.getLastName());
            if (request.getMobile() != null) contacts.get(0).setMobile(request.getMobile());
            if (request.getOffice() != null) contacts.get(0).setOffice(request.getOffice());
+           System.out.println(contacts.get(0));
        }
 
         db.addContact(contacts.get(0));
         UpdateContactResponse response= new UpdateContactResponse();
         response.setMessage("Conatct edited");
-        return  response;
+        System.out.println(response.getMessage());
+        return response;
     }
 
     private boolean isValidContactInPhoneBook(String params, Contact contact) {
