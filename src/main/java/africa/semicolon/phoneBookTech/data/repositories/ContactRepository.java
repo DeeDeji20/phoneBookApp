@@ -13,4 +13,5 @@ public interface ContactRepository {
     List<Contact> findBy(String name);
 
     List<Contact> findAll();
+
 }

@@ -153,4 +153,6 @@ class ContactServiceImplTest {
 
         assertThrows(ContactNotFoundException.class, ()-> contactService.search("fum"));
     }
+
+
 }

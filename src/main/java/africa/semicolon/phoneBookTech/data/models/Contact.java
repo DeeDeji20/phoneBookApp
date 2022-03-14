@@ -2,7 +2,7 @@ package africa.semicolon.phoneBookTech.data.models;
 
 import lombok.*;
 
-//@Data
+@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
 @RequiredArgsConstructor
