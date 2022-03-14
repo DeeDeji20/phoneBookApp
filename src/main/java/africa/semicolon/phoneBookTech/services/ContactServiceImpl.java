@@ -13,12 +13,15 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository db = new ContactRepositoryImpl();
     @Override
     public AddContactResponseDto save(AddContactRequestDto request) {
-        
         Contact contactToBeAdded = new Contact(request.getFirstName(),
                                     request.getLastName(),
                                     request.getMobile());
         db.addContact(contactToBeAdded);
+        AddContactResponseDto response = getResponse(contactToBeAdded);
+        return response;
+    }
 
+    private AddContactResponseDto getResponse(Contact contactToBeAdded) {
         AddContactResponseDto response = new AddContactResponseDto();
         response.setFullName(contactToBeAdded.getFirstName() + " " +  contactToBeAdded.getLastName());
         response.setMobile(contactToBeAdded.getMobile());
@@ -41,9 +44,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public AddContactResponseDto search(String params) {
         for (Contact contact : db.findAll()){
-            if (contact.getFirstName().trim().equalsIgnoreCase(params)||
-                contact.getLastName().trim().equalsIgnoreCase(params)||
-                contact.getMobile().trim().equalsIgnoreCase(params)) {
+            if (isValidContactInPhoneBook(params, contact)) {
                 AddContactResponseDto response = new AddContactResponseDto();
                 response.setFullName(contact.getFirstName() + " " + contact.getLastName());
                 response.setMobile(contact.getMobile());
@@ -51,5 +52,11 @@ public class ContactServiceImpl implements ContactService {
             }
         }
         throw new ContactNotFoundException(params + "not found");
+    }
+
+    private boolean isValidContactInPhoneBook(String params, Contact contact) {
+        return contact.getFirstName().trim().equalsIgnoreCase(params) ||
+                contact.getLastName().trim().equalsIgnoreCase(params) ||
+                contact.getMobile().trim().equalsIgnoreCase(params);
     }
 }
