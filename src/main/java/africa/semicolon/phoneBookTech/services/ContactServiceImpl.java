@@ -11,6 +11,8 @@ import africa.semicolon.phoneBookTech.dtos.response.DeleteContactResponse;
 import africa.semicolon.phoneBookTech.dtos.response.UpdateContactResponse;
 import africa.semicolon.phoneBookTech.exception.ContactNotFoundException;
 
+import java.util.List;
+
 public class ContactServiceImpl implements ContactService {
     private ContactRepository db = new ContactRepositoryImpl();
     @Override
@@ -54,6 +56,11 @@ public class ContactServiceImpl implements ContactService {
             }
         }
         throw new ContactNotFoundException(params + "not found");
+    }
+
+    @Override
+    public List<Contact> getAllContacts() {
+        return db.findAll();
     }
 
     @Override
