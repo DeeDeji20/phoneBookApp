@@ -38,10 +38,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public AddContactResponseDto findBy(String name) {
+    public AddContactResponseDto search(String params) {
         for (Contact contact : db.findAll()){
-            if (contact.getFirstName().equalsIgnoreCase(name)||
-                contact.getLastName().equalsIgnoreCase(name)) {
+            if (contact.getFirstName().trim().equalsIgnoreCase(params)||
+                contact.getLastName().trim().equalsIgnoreCase(params)||
+                contact.getMobile().trim().equalsIgnoreCase(params)) {
                 AddContactResponseDto response = new AddContactResponseDto();
                 response.setFullName(contact.getFirstName() + " " + contact.getLastName());
                 response.setMobile(contact.getMobile());

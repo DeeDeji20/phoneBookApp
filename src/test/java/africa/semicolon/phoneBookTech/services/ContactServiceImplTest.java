@@ -69,7 +69,7 @@ class ContactServiceImplTest {
     }
 
     @Test
-    void testThatAcontactCanBeRetrievedByFirstName(){
+    void testThatAContactCanBeRetrievedByFirstName(){
         //        given
         AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
         contactToBeAdded.setFirstName("Deji");
@@ -84,7 +84,7 @@ class ContactServiceImplTest {
 
         contactService.save(contactToBeAdded2);
 
-        AddContactResponseDto response2 = contactService.findBy(contactToBeAdded2.getFirstName());
+        AddContactResponseDto response2 = contactService.search(contactToBeAdded2.getFirstName());
 
         assertEquals("Lota Onwuka", response2.getFullName());
         assertEquals("07054", response2.getMobile());
@@ -106,7 +106,29 @@ class ContactServiceImplTest {
 
         contactService.save(contactToBeAdded2);
 
-        AddContactResponseDto response2 = contactService.findBy(contactToBeAdded2.getLastName());
+        AddContactResponseDto response2 = contactService.search(contactToBeAdded2.getLastName());
+
+        assertEquals("Lota Onwuka", response2.getFullName());
+        assertEquals("07054", response2.getMobile());
+    }
+
+    @Test
+    void testThatAcontactCanBeRetrievedByPhoneNumber() {
+        //        given
+        AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
+        contactToBeAdded.setFirstName("Deji");
+        contactToBeAdded.setLastName("Dee");
+        contactToBeAdded.setMobile("070");
+        contactService.save(contactToBeAdded);
+        //        given
+        AddContactRequestDto contactToBeAdded2 = new AddContactRequestDto();
+        contactToBeAdded2.setFirstName("Lota");
+        contactToBeAdded2.setLastName("Onwuka");
+        contactToBeAdded2.setMobile("07054");
+
+        contactService.save(contactToBeAdded2);
+
+        AddContactResponseDto response2 = contactService.search(contactToBeAdded2.getMobile());
 
         assertEquals("Lota Onwuka", response2.getFullName());
         assertEquals("07054", response2.getMobile());

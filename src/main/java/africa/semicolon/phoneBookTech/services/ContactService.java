@@ -13,5 +13,5 @@ public interface ContactService {
 
     DeleteContactResponse delete(DeleteContactRequest deleteRequest);
 
-    AddContactResponseDto findBy(String firstName);
+    AddContactResponseDto search(String firstName);
 }
