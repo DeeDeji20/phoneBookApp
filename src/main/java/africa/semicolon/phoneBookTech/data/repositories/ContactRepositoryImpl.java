@@ -23,7 +23,7 @@ public class ContactRepositoryImpl implements ContactRepository {
         for (Contact contactInPhoneBook : dataBase) {
             if (contactInPhoneBook.equals(contact)||
                 contactInPhoneBook.getMobile().equalsIgnoreCase(contact.getMobile())
-            ) throw new ContactExistsException("Contact exists");
+            ) throw new ContactExistsException("Contact already exist");
         }
     }
 
@@ -40,23 +40,17 @@ public class ContactRepositoryImpl implements ContactRepository {
     }
 
     @Override
-    public List<Contact> findBy(String name) {
+    public List<Contact> findBy(String params) {
         List<Contact> contacts = new ArrayList<>();
         for (Contact contact : dataBase) {
-            if (contact.getFirstName().equalsIgnoreCase(name)) contacts.add(contact);
+            if (contact.getFirstName().equalsIgnoreCase(params)||
+                contact.getLastName().equalsIgnoreCase(params)||
+                contact.getMobile().equals(params)) contacts.add(contact);
         }
         if (contacts.isEmpty()) throw new ContactNotFoundException("Not found");
         return contacts;
     }
 
-    @Override
-    public Contact findContactBy(String mobile) {
-        for (Contact contact : dataBase) {
-            if (contact.getMobile().equalsIgnoreCase(mobile)) {
-                return contact;
-            }else throw new ContactNotFoundException("Contact Not Found");        }
-        return null;
-    }
 
     @Override
     public List<Contact> findAll() {

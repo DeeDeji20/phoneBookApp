@@ -12,4 +12,6 @@ public interface ContactService {
     ContactRepository getDataBase();
 
     DeleteContactResponse delete(DeleteContactRequest deleteRequest);
+
+    AddContactResponseDto findBy(String firstName);
 }

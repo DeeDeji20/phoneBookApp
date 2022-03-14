@@ -36,4 +36,18 @@ public class ContactServiceImpl implements ContactService {
         db.removeContact(contactToBeDeleted);
         return null;
     }
+
+    @Override
+    public AddContactResponseDto findBy(String name) {
+        for (Contact contact : db.findAll()){
+            if (contact.getFirstName().equalsIgnoreCase(name)||
+                contact.getLastName().equalsIgnoreCase(name)) {
+                AddContactResponseDto response = new AddContactResponseDto();
+                response.setFullName(contact.getFirstName() + " " + contact.getLastName());
+                response.setMobile(contact.getMobile());
+                return response;
+            }
+        }
+        return null;
+    }
 }

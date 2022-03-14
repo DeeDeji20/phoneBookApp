@@ -89,8 +89,29 @@ class ContactRepositoryImplTest {
     }
 
     @Test
-    void testThatIfTwoContacts_WithSameNameExist_WeCanFindContactsByFirstName(){
+    void testThatWeCanFindOneContactByLastName(){
+        //given
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
+        Contact contact2 = new Contact("Deji", "fum", "07031096634");
+        //when
+        contactRepository.addContact(contact1);
+        contactRepository.addContact(contact2);
+        List<Contact> foundContacts = contactRepository.findBy("fum");
+        //assert
+        assertEquals(1,foundContacts.size());
+    }
 
+    @Test
+    void testThatIfTwoContacts_WithSameNameExist_WeCanFindContactsByFirstName(){
+        //given
+        Contact contact1 = new Contact("Dee", "Deji", "07031054664");
+        Contact contact2 = new Contact("Dee", "fum", "07031096634");
+        //when
+        contactRepository.addContact(contact1);
+        contactRepository.addContact(contact2);
+        List<Contact> foundContacts = contactRepository.findBy("Dee");
+        //assert
+        assertEquals(2,foundContacts.size());
     }
 
     @Test
@@ -100,8 +121,8 @@ class ContactRepositoryImplTest {
         //when
         contactRepository.addContact(contact1);
 
-        Contact foundContact = contactRepository.findContactBy("07031054664");
-        assertEquals(contact1,foundContact);
+        List<Contact>foundContact = contactRepository.findBy("07031054664");
+        assertEquals(1,foundContact.size());
     }
 
     @Test

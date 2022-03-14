@@ -3,7 +3,6 @@ package africa.semicolon.phoneBookTech.services;
 import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
 import africa.semicolon.phoneBookTech.dtos.request.DeleteContactRequest;
 import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
-import africa.semicolon.phoneBookTech.exception.ContactExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +30,7 @@ class ContactServiceImplTest {
     }
 
     @Test
-    void testThatCorrectResponseIsGottenBacked() {
+    void testThatCorrectResponseIsGottenBack() {
         //        given
         AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
         contactToBeAdded.setFirstName("Deji");
@@ -67,5 +66,49 @@ class ContactServiceImplTest {
         deleteRequest.setMobile("07054");
         contactService.delete(deleteRequest);
         assertEquals(1, contactService.getDataBase().count());
+    }
+
+    @Test
+    void testThatAcontactCanBeRetrievedByFirstName(){
+        //        given
+        AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
+        contactToBeAdded.setFirstName("Deji");
+        contactToBeAdded.setLastName("Dee");
+        contactToBeAdded.setMobile("070");
+        contactService.save(contactToBeAdded);
+        //        given
+        AddContactRequestDto contactToBeAdded2 = new AddContactRequestDto();
+        contactToBeAdded2.setFirstName("Lota");
+        contactToBeAdded2.setLastName("Onwuka");
+        contactToBeAdded2.setMobile("07054");
+
+        contactService.save(contactToBeAdded2);
+
+        AddContactResponseDto response2 = contactService.findBy(contactToBeAdded2.getFirstName());
+
+        assertEquals("Lota Onwuka", response2.getFullName());
+        assertEquals("07054", response2.getMobile());
+    }
+
+    @Test
+    void testThatAcontactCanBeRetrievedByLastName() {
+        //        given
+        AddContactRequestDto contactToBeAdded = new AddContactRequestDto();
+        contactToBeAdded.setFirstName("Deji");
+        contactToBeAdded.setLastName("Dee");
+        contactToBeAdded.setMobile("070");
+        contactService.save(contactToBeAdded);
+        //        given
+        AddContactRequestDto contactToBeAdded2 = new AddContactRequestDto();
+        contactToBeAdded2.setFirstName("Lota");
+        contactToBeAdded2.setLastName("Onwuka");
+        contactToBeAdded2.setMobile("07054");
+
+        contactService.save(contactToBeAdded2);
+
+        AddContactResponseDto response2 = contactService.findBy(contactToBeAdded2.getLastName());
+
+        assertEquals("Lota Onwuka", response2.getFullName());
+        assertEquals("07054", response2.getMobile());
     }
 }

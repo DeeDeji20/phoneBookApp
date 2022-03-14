@@ -12,7 +12,5 @@ public interface ContactRepository {
 
     List<Contact> findBy(String name);
 
-    Contact findContactBy(String mobile);
-
     List<Contact> findAll();
 }
