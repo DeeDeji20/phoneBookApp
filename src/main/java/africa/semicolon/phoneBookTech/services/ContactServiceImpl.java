@@ -64,14 +64,17 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public UpdateContactResponse editContact(UpdateContactRequest request, AddContactRequestDto contactToBeAdded) {
-        Contact contact = new Contact(request.getFirstName(),
-                request.getLastName(),
-                request.getMobile(),
-                request.getMiddleName(),
-                request.getOffice());
+    public UpdateContactResponse editContact(UpdateContactRequest request, String mobile) {
+       List<Contact> contacts= db.findBy(mobile);
+       if(contacts.isEmpty()) throw new ContactNotFoundException("Contact not found");
+       else {
+           if (request.getFirstName() != null) contacts.get(0).setFirstName(request.getFirstName());
+           if (request.getLastName() != null) contacts.get(0).setLastName(request.getLastName());
+           if (request.getMobile() != null) contacts.get(0).setMobile(request.getMobile());
+           if (request.getOffice() != null) contacts.get(0).setOffice(request.getOffice());
+       }
 
-        db.addContact(contact);
+        db.addContact(contacts.get(0));
         UpdateContactResponse response= new UpdateContactResponse();
         response.setMessage("Conatct edited");
         return  response;

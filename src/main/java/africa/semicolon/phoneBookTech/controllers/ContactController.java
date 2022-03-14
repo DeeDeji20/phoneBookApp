@@ -17,7 +17,7 @@ public class ContactController {
     ContactService service = new ContactServiceImpl();
 
     @PostMapping("/saveContact")
-    public AddContactResponseDto Contact(@RequestBody AddContactRequestDto contact){
+    public AddContactResponseDto save(@RequestBody AddContactRequestDto contact){
         return service.save(contact);
     }
 

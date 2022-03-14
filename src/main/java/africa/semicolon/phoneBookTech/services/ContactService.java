@@ -22,5 +22,5 @@ public interface ContactService {
 
     List<Contact> getAllContacts();
 
-    UpdateContactResponse editContact(UpdateContactRequest request, AddContactRequestDto contactToBeAdded);
+    UpdateContactResponse editContact(UpdateContactRequest request,String mobile);
 }
