@@ -7,6 +7,7 @@ import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
 import africa.semicolon.phoneBookTech.dtos.request.DeleteContactRequest;
 import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
 import africa.semicolon.phoneBookTech.dtos.response.DeleteContactResponse;
+import africa.semicolon.phoneBookTech.exception.ContactNotFoundException;
 
 public class ContactServiceImpl implements ContactService {
     private ContactRepository db = new ContactRepositoryImpl();
@@ -49,6 +50,6 @@ public class ContactServiceImpl implements ContactService {
                 return response;
             }
         }
-        return null;
+        throw new ContactNotFoundException(params + "not found");
     }
 }
