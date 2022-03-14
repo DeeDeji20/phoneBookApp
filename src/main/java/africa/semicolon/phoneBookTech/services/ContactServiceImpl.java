@@ -5,8 +5,10 @@ import africa.semicolon.phoneBookTech.data.repositories.ContactRepository;
 import africa.semicolon.phoneBookTech.data.repositories.ContactRepositoryImpl;
 import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
 import africa.semicolon.phoneBookTech.dtos.request.DeleteContactRequest;
+import africa.semicolon.phoneBookTech.dtos.request.UpdateContactRequest;
 import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
 import africa.semicolon.phoneBookTech.dtos.response.DeleteContactResponse;
+import africa.semicolon.phoneBookTech.dtos.response.UpdateContactResponse;
 import africa.semicolon.phoneBookTech.exception.ContactNotFoundException;
 
 public class ContactServiceImpl implements ContactService {
@@ -52,6 +54,20 @@ public class ContactServiceImpl implements ContactService {
             }
         }
         throw new ContactNotFoundException(params + "not found");
+    }
+
+    @Override
+    public UpdateContactResponse editContact(UpdateContactRequest request, AddContactRequestDto contactToBeAdded) {
+        Contact contact = new Contact(request.getFirstName(),
+                request.getLastName(),
+                request.getMobile(),
+                request.getMiddleName(),
+                request.getOffice());
+
+        db.addContact(contact);
+        UpdateContactResponse response= new UpdateContactResponse();
+        response.setMessage("Conatct edited");
+        return  response;
     }
 
     private boolean isValidContactInPhoneBook(String params, Contact contact) {

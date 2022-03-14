@@ -4,7 +4,7 @@ import lombok.*;
 
 @Data
 //@NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
 public class Contact {
