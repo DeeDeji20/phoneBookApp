@@ -3,8 +3,10 @@ package africa.semicolon.phoneBookTech.controllers;
 import africa.semicolon.phoneBookTech.data.models.Contact;
 import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
 import africa.semicolon.phoneBookTech.dtos.request.DeleteContactRequest;
+import africa.semicolon.phoneBookTech.dtos.request.UpdateContactRequest;
 import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
 import africa.semicolon.phoneBookTech.dtos.response.DeleteContactResponse;
+import africa.semicolon.phoneBookTech.dtos.response.UpdateContactResponse;
 import africa.semicolon.phoneBookTech.services.ContactService;
 import africa.semicolon.phoneBookTech.services.ContactServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +38,9 @@ public class ContactController {
         return service.getAllContacts();
     }
 
+    @PatchMapping("/editContact")
+    public UpdateContactResponse edit(@RequestBody UpdateContactRequest request, String mobile){
+        return service.editContact(request, mobile);
+    }
 }
 
