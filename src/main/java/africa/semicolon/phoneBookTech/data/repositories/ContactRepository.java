@@ -15,6 +15,6 @@ public interface ContactRepository extends MongoRepository<Contact, String> {
 //
 //    List<Contact> findAll();
 
-
+Contact findContactByFirstName(String firstName);
 
 }
