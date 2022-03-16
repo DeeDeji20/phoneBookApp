@@ -8,6 +8,7 @@ import africa.semicolon.phoneBookTech.dtos.request.UpdateContactRequest;
 import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
 import africa.semicolon.phoneBookTech.dtos.response.DeleteContactResponse;
 import africa.semicolon.phoneBookTech.dtos.response.UpdateContactResponse;
+import africa.semicolon.phoneBookTech.exception.ContactExistsException;
 import africa.semicolon.phoneBookTech.exception.ContactNotFoundException;
 import africa.semicolon.phoneBookTech.utils.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,10 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public DeleteContactResponse delete(String mobile) {
-//        isValidContactInPhoneBook(params, deleteRequest);
-        List<Contact> contactToBeDeleted = db.findByMobile(mobile);
-//        for (Contact contact : contactToBeDeleted) {
-//            db.delete(contact);
-//        }
-        db.deleteAll(contactToBeDeleted);
+        for (Contact contact : db.findAll()) {
+            if(contact.getMobile().equalsIgnoreCase(mobile)) db.delete(contact);
+            else throw new ContactExistsException("Contact doesn't exist");
+        }
         DeleteContactResponse response = new DeleteContactResponse();
         response.setMessage("Deleted");
         return response;
@@ -55,14 +54,13 @@ public class ContactServiceImpl implements ContactService {
         for (Contact contact : db.findAll()){
             System.out.println(db.findAll());
             if (isValidContactInPhoneBook(params, contact)) {
-            System.out.println(contact);
                 AddContactResponseDto response = new AddContactResponseDto();
                 response.setFullName(contact.getFirstName() + " " + contact.getLastName());
                 response.setMobile(contact.getMobile());
                 contacts.add(response);
                 System.out.println(response);
             }
-//               throw new ContactNotFoundException(params + " not found");
+              else throw new ContactNotFoundException(params + " not found");
         }
             return contacts;
     }
@@ -71,7 +69,6 @@ public class ContactServiceImpl implements ContactService {
     public List<Contact> getAllContacts() {
         return db.findAll();
     }
-
 
     @Override
     public UpdateContactResponse edit(UpdateContactRequest request, String mobile) {
