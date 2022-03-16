@@ -23,8 +23,5 @@ public class Contact {
     private String mobile;
     private String office;
 
-    public Contact(String firstName, String mobile) {
-        this.firstName = firstName;
-        this.mobile = mobile;
-    }
+
 }

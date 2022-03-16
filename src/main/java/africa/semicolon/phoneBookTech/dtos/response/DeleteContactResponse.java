@@ -1,5 +1,8 @@
 package africa.semicolon.phoneBookTech.dtos.response;
 
-public class DeleteContactResponse {
+import lombok.Data;
 
+@Data
+public class DeleteContactResponse {
+    private String message;
 }

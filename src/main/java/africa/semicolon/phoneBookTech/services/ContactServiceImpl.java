@@ -2,7 +2,6 @@ package africa.semicolon.phoneBookTech.services;
 
 import africa.semicolon.phoneBookTech.data.models.Contact;
 import africa.semicolon.phoneBookTech.data.repositories.ContactRepository;
-import africa.semicolon.phoneBookTech.data.repositories.ContactRepositoryImpl;
 import africa.semicolon.phoneBookTech.dtos.request.AddContactRequestDto;
 import africa.semicolon.phoneBookTech.dtos.request.DeleteContactRequest;
 import africa.semicolon.phoneBookTech.dtos.request.UpdateContactRequest;
@@ -10,26 +9,24 @@ import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
 import africa.semicolon.phoneBookTech.dtos.response.DeleteContactResponse;
 import africa.semicolon.phoneBookTech.dtos.response.UpdateContactResponse;
 import africa.semicolon.phoneBookTech.exception.ContactNotFoundException;
+import africa.semicolon.phoneBookTech.utils.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ContactServiceImpl implements ContactService {
-    private ContactRepository db = new ContactRepositoryImpl();
+    @Autowired
+    private ContactRepository db;
     @Override
     public AddContactResponseDto save(AddContactRequestDto request) {
         Contact contactToBeAdded = new Contact(request.getFirstName(),
                                     request.getLastName(),
                                     request.getMobile());
-        db.addContact(contactToBeAdded);
-        AddContactResponseDto response = getResponse(contactToBeAdded);
-        return response;
-    }
-
-    private AddContactResponseDto getResponse(Contact contactToBeAdded) {
-        AddContactResponseDto response = new AddContactResponseDto();
-        response.setFullName(contactToBeAdded.getFirstName() + " " +  contactToBeAdded.getLastName());
-        response.setMobile(contactToBeAdded.getMobile());
-        response.setStatus("Contact saved");
+        db.save(contactToBeAdded);
+        AddContactResponseDto response = ModelMapper.map(contactToBeAdded);
         return response;
     }
 
@@ -39,23 +36,35 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public DeleteContactResponse delete(DeleteContactRequest deleteRequest) {
-        Contact contactToBeDeleted = new Contact(deleteRequest.getFirstName(), deleteRequest.getMobile());
-        db.removeContact(contactToBeDeleted);
-        return null;
+    public DeleteContactResponse delete(String mobile) {
+//        isValidContactInPhoneBook(params, deleteRequest);
+        List<Contact> contactToBeDeleted = db.findByMobile(mobile);
+//        for (Contact contact : contactToBeDeleted) {
+//            db.delete(contact);
+//        }
+        db.deleteAll(contactToBeDeleted);
+        DeleteContactResponse response = new DeleteContactResponse();
+        response.setMessage("Deleted");
+        return response;
     }
 
     @Override
-    public AddContactResponseDto search(String params) {
+    public List<AddContactResponseDto> search(String params) {
+        List<AddContactResponseDto> contacts = new ArrayList<>();
+
         for (Contact contact : db.findAll()){
+            System.out.println(db.findAll());
             if (isValidContactInPhoneBook(params, contact)) {
+            System.out.println(contact);
                 AddContactResponseDto response = new AddContactResponseDto();
                 response.setFullName(contact.getFirstName() + " " + contact.getLastName());
                 response.setMobile(contact.getMobile());
-                return response;
+                contacts.add(response);
+                System.out.println(response);
             }
+//               throw new ContactNotFoundException(params + " not found");
         }
-        throw new ContactNotFoundException(params + "not found");
+            return contacts;
     }
 
     @Override
@@ -63,20 +72,15 @@ public class ContactServiceImpl implements ContactService {
         return db.findAll();
     }
 
+
     @Override
-    public UpdateContactResponse editContact(UpdateContactRequest request, String mobile) {
-       List<Contact> contacts= db.findBy(mobile);
+    public UpdateContactResponse edit(UpdateContactRequest request, String mobile) {
+       List<Contact> contacts= db.findByMobile(mobile);
        if(contacts.isEmpty()) throw new ContactNotFoundException("Contact not found");
        else {
-           System.out.println(contacts.get(0));
-           if (request.getFirstName() != null) contacts.get(0).setFirstName(request.getFirstName());
-           if (request.getLastName() != null) contacts.get(0).setLastName(request.getLastName());
-           if (request.getMobile() != null) contacts.get(0).setMobile(request.getMobile());
-           if (request.getOffice() != null) contacts.get(0).setOffice(request.getOffice());
-           System.out.println(contacts.get(0));
+           ModelMapper.checkValidUpdateRequest(request, contacts);
        }
-
-        db.addContact(contacts.get(0));
+        db.save(contacts.get(0));
         UpdateContactResponse response= new UpdateContactResponse();
         response.setMessage("Conatct edited");
         System.out.println(response.getMessage());

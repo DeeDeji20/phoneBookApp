@@ -8,7 +8,7 @@ import africa.semicolon.phoneBookTech.dtos.response.AddContactResponseDto;
 import africa.semicolon.phoneBookTech.dtos.response.DeleteContactResponse;
 import africa.semicolon.phoneBookTech.dtos.response.UpdateContactResponse;
 import africa.semicolon.phoneBookTech.services.ContactService;
-import africa.semicolon.phoneBookTech.services.ContactServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/contact/")
 public class ContactController {
-    ContactService service = new ContactServiceImpl();
+    @Autowired
+    ContactService service;
 
     @PostMapping("/saveContact")
     public AddContactResponseDto save(@RequestBody AddContactRequestDto contact){
@@ -24,12 +25,12 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    public DeleteContactResponse delete(@RequestBody DeleteContactRequest contact, @PathVariable String id){
-        return service.delete(contact);
+    public DeleteContactResponse delete(@PathVariable String id){
+        return service.delete(id);
     }
 
-    @GetMapping("/{searchParams}")
-    public AddContactResponseDto search(@PathVariable String searchParams){
+    @GetMapping("/find/{searchParams}")
+    public List<AddContactResponseDto>  search(@PathVariable String searchParams){
         return service.search(searchParams);
     }
 
@@ -38,9 +39,9 @@ public class ContactController {
         return service.getAllContacts();
     }
 
-    @PatchMapping("/editContact")
-    public UpdateContactResponse edit(@RequestBody UpdateContactRequest request, String mobile){
-        return service.editContact(request, mobile);
+    @PatchMapping("/editContact/{mobile}")
+    public UpdateContactResponse edit(@RequestBody UpdateContactRequest request, @PathVariable String mobile){
+        return service.edit(request, mobile);
     }
 }
 

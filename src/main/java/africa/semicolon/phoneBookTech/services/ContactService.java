@@ -16,11 +16,13 @@ public interface ContactService {
 
     ContactRepository getDataBase();
 
-    DeleteContactResponse delete(DeleteContactRequest deleteRequest);
+//    DeleteContactResponse delete(DeleteContactRequest deleteRequest);
 
-    AddContactResponseDto search(String firstName);
+    DeleteContactResponse delete(String mobile);
+
+    List<AddContactResponseDto> search(String firstName);
 
     List<Contact> getAllContacts();
 
-    UpdateContactResponse editContact(UpdateContactRequest request,String mobile);
+    UpdateContactResponse edit(UpdateContactRequest request, String mobile);
 }
