@@ -54,6 +54,7 @@ public class ContactServiceImpl implements ContactService {
         for (Contact contact : db.findAll()){
             System.out.println(db.findAll());
             if (isValidContactInPhoneBook(params, contact)) {
+                System.out.println("contact---->"+ contact);
                 AddContactResponseDto response = new AddContactResponseDto();
                 response.setFullName(contact.getFirstName() + " " + contact.getLastName());
                 response.setMobile(contact.getMobile());
